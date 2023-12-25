@@ -25,9 +25,9 @@ Fill .env file with your environment variables
 docker-compose up -d
 ```
 
-You can now access api at http://localhost:${PORT}
-You can access swagger at http://localhost:${PORT}/api-docs
-You can access pgadmin at http://localhost:${PGADMIN_PORT}
+- You can now access api at http://localhost:${PORT}
+- You can access swagger at http://localhost:${PORT}/api-docs
+- You can access pgadmin at http://localhost:${PGADMIN_PORT}
 
 ## TEST
 
@@ -46,3 +46,8 @@ npm install
 npx prisma migrate dev --name init
 npm run coverage
 ```
+
+### Next steps
+
+- Add more tests
+- I'm currently working on a docker-compose for production
