@@ -18,7 +18,7 @@ jobs:
     - name: Create postgres database
       run: sudo docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
     - name: Create bad env
-      run: cp .env.sample .env
+      run: cp .env.ci .env
     - name: Install Dependencies
       run: npm install
     - name: Prisma migration
