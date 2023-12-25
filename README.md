@@ -1,0 +1,5 @@
+# TS REST API QUICK STARTER
+
+## REQUIREMENTS 
+
+- docker

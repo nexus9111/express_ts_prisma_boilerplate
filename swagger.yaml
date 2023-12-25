@@ -1,0 +1,133 @@
+tags:
+- name: users
+  description: users API
+
+paths:
+  /users/register:
+    post:
+      tags:
+      - users
+      summary: Register a new user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User registration data
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+      responses:
+        200:
+          description: User registered successfully
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Login
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User login data
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: User logged in successfully
+
+  /users/profile:
+    get:
+      tags:
+        - users
+      summary: Get user profile
+      produces:
+        - application/json
+      responses:
+        200:
+          description: User profile retrieved successfully
+
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get all users -- need to be admin
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Users retrieved successfully
+
+  /users/change-password:
+    put:
+      tags:
+        - users
+      summary: Update user password
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: New and old passwords
+          required: true
+          schema:
+            type: object
+            properties:
+              newPassword:
+                type: string
+              oldPassword:
+                type: string
+      responses:
+        200:
+          description: Password updated successfully
+
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      summary: Get user by id -- need to be admin
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+      responses:
+        200:
+          description: User retrieved successfully
+    delete:
+      tags:
+        - users
+      summary: Delete user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+      responses:
+        200:
+          description: User deleted successfully
