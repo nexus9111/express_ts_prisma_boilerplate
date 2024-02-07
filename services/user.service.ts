@@ -17,6 +17,11 @@ export class UserService {
 
     public async findUserById(userId: number): Promise<User> {
         const findUser: User = await this.database.getClient().user.findUnique({ where: { id: userId } });
+        return findUser;
+    }
+
+    public async findUserByEmail(email: string): Promise<User> {
+        const findUser: User = await this.database.getClient().user.findUnique({ where: { email } });
         if (!findUser) throw new HttpException(409, "User doesn't exist");
 
         return findUser;
