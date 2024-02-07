@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: User }> {
-    const findUser: User = await this.database.getClient().user.findUnique({ where: { email: userData.email } });
+    const findUser: User = await this.users.findUserByEmail(userData.email);
     if (!findUser) throw new HttpException(409, `This email ${userData.email} was not found`);
 
     const isPasswordMatching: boolean = await compare(userData.password, findUser.password);
@@ -39,10 +39,8 @@ export class AuthService {
   }
 
   public async logout(userData: User): Promise<User> {
-    const findUser: User = await this.database.getClient().user.findFirst({ where: { email: userData.email, password: userData.password } });
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
-
-    return findUser;
+    // todo: implement logout
+    return userData;
   }
 
   public createToken(user: User): TokenData {
