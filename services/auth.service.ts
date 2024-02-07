@@ -7,17 +7,20 @@ import { HttpException } from '../exeptions/httpExeption';
 import { DataStoredInToken, TokenData } from '../interfaces/auth.interface';
 import { JWT_SECRET } from '../config/variables';
 import { DBService } from './db.service';
+import { UserService } from './user.service';
 
 @Service()
 export class AuthService {
   public database = new DBService();
+  public users = new UserService();
 
   public async signup(userData: CreateUserDto): Promise<User> {
-    const findUser: User = await this.database.getClient().user.findUnique({ where: { email: userData.email } });
+    const findUser: User = await this.users.findUserByEmail(userData.email);
     if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
 
     const hashedPassword = await hash(userData.password, 10);
-    const createUserData: Promise<User> = this.database.getClient().user.create({ data: { ...userData, password: hashedPassword } });
+    const userDto: CreateUserDto = { ...userData, password: hashedPassword };
+    const createUserData: User = await this.users.createUser(userDto);
 
     return createUserData;
   }

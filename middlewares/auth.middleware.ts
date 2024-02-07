@@ -4,6 +4,7 @@ import { verify } from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/variables';
 import { HttpException } from '../exeptions/httpExeption';
 import { DataStoredInTokenExp, RequestWithUser } from '../interfaces/auth.interface';
+import { UserService } from '../services/user.service';
 
 const getAuthorization = (req) => {
   const coockie = req.cookies['Authorization'];
@@ -25,8 +26,8 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
         next(new HttpException(401, 'Wrong authentication token'));
       }
       
-      const users = new PrismaClient().user;
-      const findUser = await users.findUnique({ where: { id: Number(id) } });
+      const users = new UserService();
+      const findUser = await users.findUserById(id);
 
       if (findUser) {
         req.user = findUser;
