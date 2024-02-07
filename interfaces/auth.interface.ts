@@ -5,6 +5,11 @@ export interface DataStoredInToken {
   id: number;
 }
 
+export interface DataStoredInTokenExp {
+  id: number;
+  exp: number;
+}
+
 export interface TokenData {
   token: string;
   expiresIn: number;

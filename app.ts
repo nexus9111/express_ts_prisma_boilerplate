@@ -13,6 +13,7 @@ import { Routes } from './interfaces/route.interface';
 import { CREDENTIALS, ENV, LOG_FORMAT, ORIGIN, PORT } from './config/variables';
 import { logger, stream } from './config/logger';
 import { ErrorMiddleware } from './middlewares/error.middleware';
+import fileUpload from 'express-fileupload';
 
 export class App {
   public app: express.Application;
@@ -48,9 +49,13 @@ export class App {
     this.app.use(hpp());
     this.app.use(helmet());
     this.app.use(compression());
-    this.app.use(express.json());
+    this.app.use(express.json({ limit: '50mb' }));
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
+    this.app.use(fileUpload({
+      createParentPath: true,
+      limits: { fileSize: 50 * 1024 * 1024 },
+    }));
 
     const limiter = rateLimit({
       windowMs: 15 * 60 * 1000,
