@@ -6,12 +6,10 @@ import { User } from '../interfaces/user.interface';
 import { HttpException } from '../exeptions/httpExeption';
 import { DataStoredInToken, TokenData } from '../interfaces/auth.interface';
 import { JWT_SECRET } from '../config/variables';
-import { DBService } from './db.service';
 import { UserService } from './user.service';
 
 @Service()
 export class AuthService {
-  public database = new DBService();
   public users = new UserService();
 
   public async signup(userData: CreateUserDto): Promise<User> {
